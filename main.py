@@ -1,6 +1,5 @@
 # my_secondwebsite
 import streamlit as st
-st.title('오늘의 운세를 확인하세요')
 import streamlit as st
 import datetime
 import random
@@ -12,8 +11,16 @@ st.set_page_config(page_title="오늘의 운세 🔮", page_icon="✨")
 st.title("🔮 오늘의 운세 보기")
 st.write("생일을 입력하면 오늘의 운세를 알려드려요! 🎂")
 
+# 날짜 범위 설정 (1900년 ~ 오늘)
+min_date = datetime.date(1900, 1, 1)
+max_date = datetime.date.today()
+
 # 생일 입력
-birthday = st.date_input("🎈 당신의 생일을 선택하세요")
+birthday = st.date_input(
+    "🎈 당신의 생일을 선택하세요",
+    min_value=min_date,
+    max_value=max_date
+)
 
 # 운세 리스트
 fortunes = [
@@ -32,7 +39,7 @@ if st.button("🔮 운세 보기"):
     if birthday:
         today = datetime.date.today()
 
-        # 생일 기반 랜덤 시드 (같은 생일이면 비슷한 결과)
+        # 생일 기반 랜덤 시드
         seed = birthday.month * 100 + birthday.day + today.day
         random.seed(seed)
 
