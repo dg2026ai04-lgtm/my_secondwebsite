@@ -1,5 +1,4 @@
 # my_secondwebsite
-my_secondwebsite/main.py
 import streamlit as st
 st.title('오늘의 운세를 확인하세요')
 import streamlit as st
