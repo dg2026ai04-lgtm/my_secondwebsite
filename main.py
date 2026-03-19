@@ -6,7 +6,9 @@ import random
 # 페이지 설정
 st.set_page_config(page_title="운세 여행 🔮", page_icon="✨")
 
-# 버튼 스타일 수정 (핵심!)
+# ======================
+# 🎨 공통 버튼 스타일
+# ======================
 st.markdown("""
 <style>
 div.stButton > button {
@@ -23,14 +25,18 @@ div.stButton > button:hover {
 </style>
 """, unsafe_allow_html=True)
 
-# 페이지 상태
+# ======================
+# 상태 초기화
+# ======================
 if "page" not in st.session_state:
     st.session_state.page = 0
 
 if "data" not in st.session_state:
     st.session_state.data = {}
 
+# ======================
 # 배경 함수
+# ======================
 def set_bg(color1, color2):
     st.markdown(f"""
     <style>
@@ -42,16 +48,39 @@ def set_bg(color1, color2):
     """, unsafe_allow_html=True)
 
 # =====================
-# 0️⃣ 시작 페이지
+# 0️⃣ 시작 페이지 (오로라)
 # =====================
 if st.session_state.page == 0:
 
-    set_bg("#1e1e2f", "#3a0ca3")
+    st.markdown("""
+    <style>
+    .stApp {
+        background: linear-gradient(135deg, #e0c3fc, #8ec5fc, #fbc2eb);
+        color: #222;
+    }
+
+    label {
+        color: #4a148c !important;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .stTextInput input, .stDateInput input {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        border-radius: 10px;
+        padding: 8px;
+        border: 2px solid #b39ddb;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     st.title("🔮 운세 여행 시작")
+    st.write("✨ 당신의 운명을 확인하러 떠나보세요")
 
-    name = st.text_input("🧑 이름")
-    birthday = st.date_input("🎂 생일",
+    name = st.text_input("🧑 이름을 입력하세요")
+    birthday = st.date_input(
+        "🎂 생일을 선택하세요",
         min_value=datetime.date(1900,1,1),
         max_value=datetime.date.today()
     )
@@ -98,11 +127,10 @@ elif st.session_state.page == 1:
 ✨ 오늘은 전반적으로 균형이 중요한 하루입니다.  
 현재 당신의 운세 점수는 **{avg}점**으로 안정적인 흐름을 보이고 있어요.
 
-👉 무리하게 큰 변화를 시도하기보다는  
-지금 하고 있는 일을 꾸준히 유지하는 것이 더 좋은 결과를 가져옵니다.
+👉 무리한 도전보다는 꾸준함이 중요합니다.  
+👉 작은 선택 하나가 하루를 바꿀 수 있어요!
 
-💡 작은 선택 하나가 하루의 분위기를 바꿀 수 있으니  
-신중하면서도 긍정적인 태도를 유지해보세요!
+💡 긍정적인 태도를 유지해보세요!
 """)
 
     st.progress(avg)
@@ -125,19 +153,18 @@ elif st.session_state.page == 2:
     st.progress(d["study"])
 
     st.write(f"""
-📖 오늘의 공부운 점수는 **{d['study']}점**입니다.
+📖 공부운 점수: **{d['study']}점**
 
-👉 집중력이 평소보다 {"높은" if d["study"]>75 else "조금 부족한"} 상태입니다.
+👉 집중력은 {"좋은 상태" if d["study"] > 75 else "조금 흐트러질 수 있음"}
 
-✔️ 추천 행동:
+✔️ 추천:
 - 짧게 집중 → 쉬기 반복
-- 어려운 문제보다 쉬운 문제 먼저 해결
+- 쉬운 문제부터 시작
 
 ⚠️ 주의:
-- 핸드폰 사용 시간이 늘어날 수 있어요
+- 핸드폰 유혹
 
-💡 팁:
-오늘은 완벽함보다 "꾸준함"이 더 중요합니다!
+💡 오늘은 꾸준함이 핵심!
 """)
 
     st.snow()
@@ -159,19 +186,18 @@ elif st.session_state.page == 3:
     st.progress(d["love"])
 
     st.write(f"""
-💌 오늘의 연애운은 **{d['love']}점**입니다.
+💌 연애운 점수: **{d['love']}점**
 
-👉 감정 표현이 중요한 하루입니다.
+👉 감정 표현이 중요한 하루
 
 ✔️ 좋은 흐름:
-- 먼저 연락하면 좋은 반응 가능 😊
-- 솔직한 대화가 관계를 더 깊게 만듦
+- 먼저 다가가기
+- 솔직한 대화
 
 ⚠️ 주의:
-- 오해가 생기기 쉬운 날
+- 오해 가능성
 
-💡 팁:
-짧은 한마디가 큰 변화를 만들 수 있어요!
+💡 한마디가 관계를 바꿉니다!
 """)
 
     if st.button("➡️ 금전운 보기"):
@@ -191,19 +217,18 @@ elif st.session_state.page == 4:
     st.progress(d["money"])
 
     st.write(f"""
-💵 오늘의 금전운은 **{d['money']}점**입니다.
+💵 금전운 점수: **{d['money']}점**
 
-👉 소비 습관을 점검해야 하는 날입니다.
+👉 소비 관리가 중요한 날
 
 ✔️ 추천:
-- 꼭 필요한 소비만 하기
+- 계획 소비
 - 충동구매 피하기
 
 ⚠️ 주의:
-- 작은 지출이 쌓일 수 있음
+- 작은 지출 누적
 
-💡 팁:
-오늘 아낀 돈이 미래의 기회를 만듭니다!
+💡 절약이 기회를 만듭니다!
 """)
 
     if st.button("➡️ 행운지수 보기"):
@@ -223,20 +248,20 @@ elif st.session_state.page == 5:
     st.progress(d["luck"])
 
     st.write(f"""
-🌟 오늘의 행운 지수는 **{d['luck']}점**입니다.
+🌟 행운 점수: **{d['luck']}점**
 
-👉 예상치 못한 기회가 찾아올 수 있어요!
+👉 예상치 못한 기회 가능!
 
-✔️ 행운 활용법:
-- 새로운 도전 해보기
-- 평소 안 하던 선택 해보기
+✔️ 추천:
+- 새로운 시도
+- 평소와 다른 선택
 
-🎁 오늘의 행운 아이템:
+🎁 행운 아이템
 - 색: {d['color']}
 - 음식: {d['food']}
 - 숫자: {d['number']}
 
-💡 작은 시도가 큰 행운을 부릅니다!
+💡 작은 도전이 큰 행운으로!
 """)
 
     st.balloons()
